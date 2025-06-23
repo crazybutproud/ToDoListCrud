@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
-    @Autowired
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
+
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     public Task createNewTask(Task task) { // ?? может по названию
         return taskRepository.save(task);
@@ -22,7 +26,7 @@ public class TaskService {
     public Task getTaskById(long id) {
         return taskRepository.findById(id);
     }
-    public Task getByTitle(String title) {
+    public Optional getByTitle(String title) {
         return taskRepository.findByTitle(title);
     }
     public List<Task> getTasksByCompletedIsTrue() {

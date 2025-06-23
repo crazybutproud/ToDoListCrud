@@ -1,24 +1,27 @@
 package org.example.todolistcrud.Models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
-@Table(name="appointment")
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name="tasks")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
     @Column(name = "title", length = 50, nullable = false)
     private String title;
     @Column(name = "description", length = 200, nullable = false)
-    private String taskDescription;
-    @Column(name = "completed")
-    private boolean completed;
+    private String description;
+    @Column(nullable = false)
+    private boolean completed = false;
 
 
     @Override
@@ -26,7 +29,7 @@ public class Task {
         return "Task{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", taskDescription='" + taskDescription + '\'' +
+                ", description='" + description + '\'' +
                 ", completed=" + completed +
                 '}';
     }
