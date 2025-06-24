@@ -1,0 +1,58 @@
+body {
+    background-image: url("https://avatars.mds.yandex.net/i?id=aedeb5ff2dd2bbaddb0288c89a1322060b9d09be-12569941-images-thumbs&n=13");
+    background-size: 1800px 900px;
+}
+.header {
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    font-family: "Agency FB", sans-serif;
+    font-size: xxx-large;
+    background-color: rgba(245, 245, 245, 0.83);
+    font-style: oblique;
+    letter-spacing: 5px;
+    /*margin: 20px;*/
+    /*padding: 10px;*/
+}
+
+.footer {
+    width: 100%;
+    height: 50px;
+    font-size: x-large;
+    background-color: rgba(245, 245, 245, 0.83);
+    text-align: center;
+    font-family: "Agency FB", sans-serif;
+    font-style: oblique;
+    letter-spacing: 5px;
+    font-variant: all-small-caps;
+}
+
+.main {
+    height: 600px;
+    align-content: center;
+    /*font-family: "Agency FB", sans-serif;*/
+    font-family: "Gill Sans", serif;
+}
+button {
+    display: inline-flex;
+    height: 40px;
+    width: 200px;
+    border: 2px solid #6ba66b;
+    margin: 20px 20px 20px 20px;
+    color: #BFC0C0;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: .8em;
+    letter-spacing: 1.5px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+}
+
+button {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    place-content: center;
+}

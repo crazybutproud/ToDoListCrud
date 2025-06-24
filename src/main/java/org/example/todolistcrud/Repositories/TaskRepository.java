@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface TaskRepository extends CrudRepository<Task, Long> {
     public Optional findByTitle(String title);
     public List<Task> findAll();
-    public Task findById(long id);
+    public Optional findById(long id);
     public List<Task> findByCompletedIsTrue();
     public List<Task> findByCompletedIsFalse();
 
