@@ -1,13 +1,16 @@
 package org.example.todolistcrud.Controllers;
 
-import ch.qos.logback.core.model.Model;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.ui.Model;
 import org.example.todolistcrud.Models.Task;
 import org.example.todolistcrud.Services.TaskService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/tasks")
@@ -19,19 +22,58 @@ public class TaskController {
     }
 
     @GetMapping("/") // основная страница с кнопками
-    public String mainPage() {
-        return "/MainPage";
+    public String mainPage(Model model) {
+        model.addAttribute("task", new Task()); // Пустой объект для форм
+        return "MainPage";
+//        return "/MainPage";
     }
 
-    @GetMapping("/AllTasksPage") //страница со всеми задачами. добавить пагинацию. модель???????????
-    public List<Task> getAllTasks() {
-        List<Task> tasks = taskService.getAllTasks();
-        return tasks;
+    @GetMapping("/AllTasks") //страница со всеми задачами. добавить пагинацию.
+    public String getAllTasks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Model model
+    ) {
+        Page<Task> tasks = taskService.getAllTasks(PageRequest.of(page, size));
+        model.addAttribute("tasks", tasks);
+        return "AllTasks";
     }
 
-    @GetMapping("/TaskPage") // страница с одной задачей. модель??????
-    public String taskPage(Model model) { // возможность найти таск по айди и по имени
-//        Task task = taskService.getTaskById();
-        return null;
+    @GetMapping("/Task") // страница с одной задачей.
+    public String taskPage(
+            @RequestParam Long id,
+            Model model
+    ) {
+        Optional<Task> task = taskService.getTaskById(id);
+        task.ifPresent(t -> model.addAttribute("task", t));
+        return "TaskPage";
+    }
+
+    @PostMapping("/NewTask") //создание новой задачи
+    public String newTaskPage(
+            @ModelAttribute("task") Task task,
+            BindingResult result
+    ) {
+        if (result.hasErrors()) {
+            return "MainPage"; // Возврат с ошибками
+        }
+        taskService.createNewTask(task);
+        return "redirect:/api/tasks/AllTasks";
+    }
+
+    @PostMapping("/Search") // поиск задачи по айди и по названию
+    public String searchTask(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) Long id,
+            Model model
+    ) {
+        if (id != null) {
+            Optional<Task> task = taskService.getTaskById(id);
+            task.ifPresent(t -> model.addAttribute("tasks", List.of(t)));
+        } else if (title != null) {
+            Optional<Task> task = taskService.getByTitle(title);
+            task.ifPresent(t -> model.addAttribute("tasks", List.of(t)));
+        }
+        return "AllTasks"; // Используем тот же шаблон, что и для списка
     }
 }

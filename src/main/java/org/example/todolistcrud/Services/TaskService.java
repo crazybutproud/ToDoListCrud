@@ -28,8 +28,8 @@ public class TaskService { // логирование???????
         }
     }
 
-    public List<Task> getAllTasks() { //Возвращает все задачи из БД.
-        return taskRepository.findAll();
+    public Page<Task> getAllTasks(Pageable pageable) { //Возвращает все задачи из БД.
+        return taskRepository.findAll(pageable);
     }
 
     public Optional<Task> getTaskById(long id) {
