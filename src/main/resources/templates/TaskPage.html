@@ -5,6 +5,14 @@
     <title>Задача</title>
 </head>
 <body>
+<div th:if="${task}">
+    <h1 th:text="${task.title}"></h1>
+    <p th:text="${task.description}"></p>
+    <a th:href="@{/api/tasks/}">На главную</a>
+</div>
+<div th:unless="${task}">
+    <p>Задача не найдена!</p>
+</div>
 
 </body>
 </html>

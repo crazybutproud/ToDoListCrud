@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en"  xmls:th="http://thymeleaf.org" xmlns:xmls="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Регистрация</title>
+    <title>Все задачи</title>
 </head>
 <body>
+<div th:each="task : ${tasks.content}">
+    <h3 th:text="${task.title}"></h3>
+    <a th:href="@{/api/tasks/Task(id=${task.id})}">Подробнее</a>
+</div>
+
+<!-- Пагинация -->
+<div th:if="${tasks.totalPages > 1}">
+  <span th:each="i : ${#numbers.sequence(0, tasks.totalPages - 1)}">
+    <a th:href="@{/api/tasks/AllTasks(page=${i}, size=${tasks.size})}"
+       th:text="${i+1}">
+    </a>
+  </span>
+</div>
 
 </body>
 </html>

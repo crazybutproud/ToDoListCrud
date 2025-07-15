@@ -5,6 +5,10 @@
     <title>Поиск задачи</title>
 </head>
 <body>
-
+<form th:action="@{/api/tasks/Search}" method="post">
+    <input type="text" name="title" placeholder="Название">
+    <input type="number" name="id" placeholder="ID">
+    <button type="submit">Найти</button>
+</form>
 </body>
 </html>
